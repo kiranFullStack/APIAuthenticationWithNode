@@ -1,29 +1,36 @@
-import { 
-  DASHBOARD_GET_DATA, 
+import {
+  DASHBOARD_GET_DATA,
+  DASHBOARD_PATCH_DATA,
   AUTH_LINK_GOOGLE,
   AUTH_LINK_FACEBOOK,
   AUTH_UNLINK_GOOGLE,
-  AUTH_UNLINK_FACEBOOK  
-} from '../actions/types';
+  AUTH_UNLINK_FACEBOOK,
+} from "../actions/types";
 
 const DEFAULT_STATE = {
-  secret: '',
-  methods: []
-}
+  secret: "",
+  methods: [],
+};
 
 export default (state = DEFAULT_STATE, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case AUTH_LINK_GOOGLE:
-      return { ...state, methods: action.payload.methods }
+      return { ...state, methods: action.payload.methods };
     case AUTH_LINK_FACEBOOK:
-      return { ...state, methods: action.payload.methods }
+      return { ...state, methods: action.payload.methods };
     case AUTH_UNLINK_GOOGLE:
-      return { ...state, methods: action.payload.methods }
+      return { ...state, methods: action.payload.methods };
     case AUTH_UNLINK_FACEBOOK:
-      return { ...state, methods: action.payload.methods }
+      return { ...state, methods: action.payload.methods };
     case DASHBOARD_GET_DATA:
-      return { ...state, secret: action.payload.secret, methods: action.payload.methods }
+      return {
+        ...state,
+        secret: action.payload.secret,
+        methods: action.payload.methods,
+      };
+    case DASHBOARD_PATCH_DATA:
+      return { ...state, methods: action.payload.methods };
     default:
-      return state
+      return state;
   }
-}
+};

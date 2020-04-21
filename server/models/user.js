@@ -1,52 +1,73 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
 // Create a schema
 const userSchema = new Schema({
   methods: {
     type: [String],
-    required: true
+    required: true,
   },
   local: {
     email: {
       type: String,
-      lowercase: true
+      lowercase: true,
     },
     password: {
-      type: String
-    }
+      type: String,
+    },
   },
   google: {
     id: {
-      type: String
+      type: String,
     },
     email: {
       type: String,
-      lowercase: true
-    }
+      lowercase: true,
+    },
+    displayName: {
+      type: String,
+    },
   },
   facebook: {
     id: {
-      type: String
+      type: String,
     },
     email: {
       type: String,
-      lowercase: true
-    }
-  }
+      lowercase: true,
+    },
+  },
+  userData: {
+    asana: {
+      type: Boolean,
+      default: false,
+    },
+    pranayama: {
+      type: Boolean,
+      default: false,
+    },
+    dhyana: {
+      type: Boolean,
+      default: false,
+    },
+    samadhi: {
+      type: Boolean,
+      default: false,
+    },
+  },
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   try {
-    console.log('entered');
-    if (!this.methods.includes('local')) {
+    console.log("entered");
+    if (!this.methods.includes("local")) {
       next();
     }
     //the user schema is instantiated
     const user = this;
     //check if the user has been modified to know if the password has already been hashed
-    if (!user.isModified('local.password')) {
+    if (!user.isModified("local.password")) {
       next();
     }
     // Generate a salt
@@ -55,7 +76,7 @@ userSchema.pre('save', async function (next) {
     const passwordHash = await bcrypt.hash(this.local.password, salt);
     // Re-assign hashed version over original, plain text password
     this.local.password = passwordHash;
-    console.log('exited');
+    console.log("exited");
     next();
   } catch (error) {
     next(error);
@@ -68,10 +89,10 @@ userSchema.methods.isValidPassword = async function (newPassword) {
   } catch (error) {
     throw new Error(error);
   }
-}
+};
 
 // Create a model
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model("user", userSchema);
 
 // Export the model
 module.exports = User;
