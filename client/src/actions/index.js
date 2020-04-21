@@ -163,20 +163,12 @@ export const sendPatchRequest = () => {
   return async (dispatch) => {
     try {
       const res = await axios.patch("http://localhost:5000/users/dashboard", {
-        google: {
-          id: "116029698606111412290",
-          displayName: "PreciseYoga. com",
-          email: "preciseyoga@gmail.com",
-        },
         userData: {
           asana: true,
-          pranayama: true,
+          pranayama: false,
           dhyana: true,
-          samadhi: true,
+          samadhi: false,
         },
-        methods: ["google"],
-
-        __v: 0,
       });
 
       dispatch({
